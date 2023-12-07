@@ -1,0 +1,118 @@
+.card_outer {
+  border-radius: 15px;
+  border: 1px solid #f3f3f4;
+  margin-top: 13px;
+  gap: 34px;
+  cursor: pointer;
+
+  padding: 15px;
+  justify-content: space-between;
+  display: flex;
+  background: #fff;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+.cardselect_outer{
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid #f3f3f4;
+    /* margin-top: 13px; */
+    gap: 34px;
+    cursor: pointer;
+
+    padding: 7px;
+    justify-content: space-between;
+    display: flex;
+    background: #FFF5E5;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin: 0;
+}
+
+.section_display{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.card_outer > section {
+  display: flex;
+  padding-top: 18px;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+.card_outer > section > h1 {
+  color: #242331;
+  font-family: "Nunito";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.cardselect_outer > section {
+    display: flex;
+
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .cardselect_outer > section > h1 {
+    color: #242331;
+    font-family: "Nunito";
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .cardselect_outer >section >span{
+      color: #797979;
+font-family: "Nunito";
+font-size: 14px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+  }
+.card_outer > section > span {
+  display: flex;
+  gap: 2px;
+
+
+  justify-content: center;
+  align-items: center;
+}
+
+#red {
+  width: 10px;
+  height: 11px;
+  border-radius: 10px;
+  background-color: #d12223;
+}
+
+#green {
+  width: 10px;
+  height: 11px;
+  border-radius: 10px;
+  background-color: #34a853;
+}
+
+.card_outer > span {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #ffdfa2;
+  background: #fff5e5;
+}
+
+.cardselect_outer > span {
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 15px;
+    border: 1px solid #ffdfa2;
+    background: white;
+}
