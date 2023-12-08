@@ -46,26 +46,62 @@
 .right_bar {
   display: flex;
   gap: 7px;
+  width: 79%;
+  justify-content: flex-end;
 }
-.right_bar > section > span {
+.right_bar > section > img {
   display: flex;
-  left: 4px;
+  padding: 3px;
   justify-content: center;
   align-items: center;
-  position: absolute;
+
   border-radius: 25px;
   width: 25px;
   background: #f9f9f9;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
 }
+
+.right_bar > section > p {
+  color: #242331;
+  text-align: right;
+  font-family: "Nunito";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+p {
+  margin: 0px;
+}
 .right_bar > section {
-  padding: 4px;
+  padding: 4px 6px;
   display: flex;
+  gap: 5px;
   justify-content: center;
   align-items: center;
   border-radius: 30px;
   border: 1px solid rgba(255, 153, 0, 0.1);
   background: #ffc656;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
-  position: relative;
+}
+
+.right_bar > span {
+  display: flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+.right_bar > span > img {
+  cursor: pointer;
+}
+.right_bar > span > p {
+  color: #242331;
+  text-align: right;
+  font-family: "Nunito";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
 }

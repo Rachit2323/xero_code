@@ -29,6 +29,11 @@
 
 }
 
+.indi_card{
+  display: flex;
+
+}
+
 .dash_name {
   box-sizing: border-box;
   width: 95%;

@@ -10,7 +10,8 @@ const initialState = {
   successsignin: false,
   successsignup: false,
   signupdata:"",
-  gitdata:""
+  gitdata:"",
+  userdata:{}
 };
 
 export const signupUser = createAsyncThunk("signupuser", async (body) => {
@@ -25,6 +26,9 @@ export const signupUser = createAsyncThunk("signupuser", async (body) => {
     });
 
     const data = await result.json();
+    const { token } = data;
+
+    localStorage.setItem("token", token);
 
     return data;
   } catch (error) {
@@ -97,10 +101,33 @@ export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
   }
  });
 
+ export const userdetails = createAsyncThunk("userdetails", async () => {
+
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API}users/userdetail`, {
+      method: "GET",
+      headers:{
+        Authorization: `Bearer ${token}`,
+      }
+
+    });
+
+    const data = await response.json();
+
+
+    if (!response.ok) {
+      return { error: data.message };
+    }
+
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+ });
+
 
  export const gitdataUser= createAsyncThunk("gitdataUser", async () => {
-
-
   try {
     const response = await fetch(`${API}users/getUser`, {
       method: "GET",
@@ -121,6 +148,58 @@ export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
     return { error: error.message };
   }
  });
+
+ export const typeidata= createAsyncThunk("typeidata", async (values) => {
+
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API}users/type`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ values }),
+    });
+ 
+    const data = await response.json();
+ 
+    if (!response.ok) {
+      return { error: data.message };
+    }
+    // console.log(data,data.token);
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+ });
+
+
+ export const carddata= createAsyncThunk("carddata", async (values) => {
+
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API}users/card`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ values }),
+    });
+ 
+    const data = await response.json();  
+ 
+    if (!response.ok) {
+      return { error: data.message };
+    }
+    // console.log(data,data.token);
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+ });
+ 
 
 const authReducer = createSlice({
   name: "user",
@@ -208,6 +287,22 @@ const authReducer = createSlice({
         state.gitdata = action.payload.access_token;
       })
       .addCase(gitdataUser.rejected, (state, action) => {
+        state.loading = false;
+        // state.errorsignin = action.payload.error;
+        state.successsignin = action.payload.success;
+      })
+      .addCase(userdetails.pending, (state) => {
+        state.loading = true;
+        // state.successsignin = false;
+      })
+      .addCase(userdetails.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.userdata=action.payload.user;
+        state.successsignup = action.payload.success;
+
+      })
+      .addCase(userdetails.rejected, (state, action) => {
         state.loading = false;
         // state.errorsignin = action.payload.error;
         state.successsignin = action.payload.success;

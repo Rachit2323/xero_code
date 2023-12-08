@@ -1,13 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Dash.css";
 import Navbar from "./Navbar.js";
 import Topbar from "./Topbar.js";
 import Card from "./Card.js";
 import Pie from "./Pie.js";
 import CardSelect from "./Cardselect.js";
-// import Hole from "./svg/holecircle.svg";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { carddata, userdetails } from "../../Reducers/auth.js";
+
+import { ecosystem } from "./data.js";
+
 const Dash = () => {
   const [isToggled, setToggle] = useState(false);
+  const [count, setCount] = useState(0);
+  const [selectedSystem, setSelectedSystem] = useState([
+    { cloud: null, img: null },
+    { source: null, img: null },
+    { data: null, img: null },
+  ]);
+
+  const { userdata } = useSelector((state) => state.user);
+  console.log(selectedSystem);
+
+  const {
+    cloud,
+    cloud_img,
+    sourceCode,
+    sourceCode_img,
+    dataSource,
+    dataSource_img,
+    counted,
+
+  } = userdata;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userdata) {
+      // setCount(3);
+    
+        setCount(counted);
+      
+      setSelectedSystem([
+        {
+          cloud: cloud,
+          img: cloud_img,
+        },
+        {
+          source: sourceCode,
+          img: sourceCode_img,
+        },
+        {
+          data: dataSource,
+          img: dataSource_img,
+        },
+      ]);
+    }
+  }, [userdata]);
+
+  console.log(selectedSystem);
+  useEffect(() => {
+    dispatch(userdetails());
+  }, []);
+
+  useEffect(() => {
+    // console.log(selectedSystem,count);
+    if (count >= 3) {
+      
+      dispatch(carddata(selectedSystem));
+    }
+  }, [count]);
+
+  const handleCardSelect = (system, name, img) => {
+    setSelectedSystem((prevSelectedSystem) =>
+      prevSelectedSystem.map((item, index) => {
+        if (system === "Cloud" && index === 0) {
+          setCount(count + 1);
+          return { ...item, cloud: name, img: img };
+        } else if (system === "Source Code" && index === 1) {
+          setCount(count + 1);
+          return { ...item, source: name, img: img, cloud: null, data: null };
+        } else if (system === "Data Source" && index === 2) {
+          setCount(count + 1);
+          return { ...item, data: name, img: img, cloud: null, source: null };
+        }
+        return item;
+      })
+    );
+  };
+
   const Circlehole = () => {
     return (
       <svg width="35" height="35">
@@ -28,7 +110,7 @@ const Dash = () => {
           <div className="dash_main">
             <div className="dash_name">
               <span>
-                <h1>Hi Rachit !</h1>
+                <h1>Hi {userdata.firstName} !</h1>
                 <h6>Welcome to XeroCodee Ecosystem 😎</h6>
               </span>
               <div className="switch-container">
@@ -50,67 +132,59 @@ const Dash = () => {
                   <Circlehole />
                   <span></span>
                 </section>
+                {/* Ecosystem */}
                 <div className="section_display">
-                  <div className="section_card">
-                    <section>
-                      <span>
-                        <h1>Step 1</h1>
-                        <p>Connect to cloud</p>
-                      </span>
-                    </section>
-                    <div className="card_all_section">
-                      <Card />
-                      <Card />
+                  {ecosystem.map((system, index) => (
+                    <div key={index} className="section_card">
+                      <section>
+                        <span>
+                          <h1>Step {index + 1}</h1>
+                          <p>Connect to {system.name}</p>
+                        </span>
+                      </section>
+                      <div className="card_all_section">
+                        {system.options.map((item, innerIndex) => (
+                          <div
+                            className="indi_card"
+                            key={innerIndex}
+                            onClick={() =>
+                              handleCardSelect(system.name, item.name, item.img)
+                            }
+                          >
+                            <Card name={item.name} url={item.img} />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="section_card">
-                    <section>
-                      <span>
-                        <h1>Step 2</h1>
-                        <p>Connect to Source code</p>
-                      </span>
-                    </section>
-                    <div className="card_all_section">
-                      <Card />
-                      <Card />
-                      <Card />
-                    </div>
-                  </div>
-                  <div className="section_card">
-                    <section>
-                      <span>
-                        <h1>Step 3</h1>
-                        <p>Connect to Data Source</p>
-                      </span>
-                    </section>
-                    <div className="card_all_section">
-                      <Card />
-                      <Card />
-                      <Card />
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
+
+              {/* Progress */}
               <div className="section_right">
                 <span>
                   <h1>Your Progress </h1>
                   <p>towards XeroCodee</p>
                 </span>
-                <Pie score={1} />
+                <Pie
+                  score={
+                    count === 1 ? 40 : count === 2 ? 80 : count === 0 ? 0 : 100
+                  }
+                />
+
                 <p>View Details</p>
                 <section>
-                  <span>
-                    <p>Step 1</p>
-                    <CardSelect />
-                  </span>
-                  <span>
-                    <p>Step 2</p>
-                    <CardSelect />
-                  </span>
-                  <span>
-                    <p>Step 3</p>
-                    <CardSelect />
-                  </span>
+                  {selectedSystem.map((item, index) => (
+                    <span key={index}>
+                      <p>Step {index + 1}</p>
+                      <CardSelect
+                        key={index}
+                        name={item.cloud || item.source || item.data}
+                        status="Complete"
+                        img={item.img}
+                      />
+                    </span>
+                  ))}
                 </section>
               </div>
             </div>

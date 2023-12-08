@@ -1,20 +1,20 @@
 import React from "react";
 import "./Card.css";
 import reload from "./svg/reload.svg";
-import amazon from "../../Images/1280px-Amazon_Web_Services_Logo 1.svg";
-const Card = () => {
+
+const Card = ({ name, url }) => {
   return (
     <div className="card_outer">
       <section>
-        <h1>AWS</h1>
+        <h1>{name}</h1>
         <span>
           <p id="red"></p>
           <p id="green"></p>
-         <p id="reload_img"> <img src={reload} /></p>
+         <p id="reload_img"> <img src={reload} alt="reload" /></p>
         </span>
       </section>
       <span>
-        <img src={amazon} />
+        <img id="logo" src={url} alt={name} />
       </span>
     </div>
   );

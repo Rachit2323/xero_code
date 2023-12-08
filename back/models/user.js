@@ -20,10 +20,10 @@ const UserSchema = new Schema({
    required: true
  },
  hosting:{
-     type:String
+  type: Object,
  },
  userType:{
-  type: [String],
+    type: Object,
  },
  cloud:{
   type:String
@@ -33,6 +33,18 @@ const UserSchema = new Schema({
  },
  sourceCode:{
   type:String,
+ },
+ cloud_img:{
+  type:String
+ },
+ dataSource_img:{
+  type:String,
+ },
+ sourceCode_img:{
+  type:String,
+ },
+ counted:{
+  type:Number
  }
 });
 

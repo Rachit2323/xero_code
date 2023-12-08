@@ -3,7 +3,13 @@ import "./Signup.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import xcode from "../../Images/logo 4.png";
-import { signupUser, signinGoogle, gitsign,gitdataUser } from "../../Reducers/auth.js";
+import {
+  signupUser,
+  signinGoogle,
+  gitsign,
+  gitdataUser,
+  typeidata,
+} from "../../Reducers/auth.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useParams, useLocation } from "react-router-dom";
@@ -11,10 +17,7 @@ const Signup = () => {
   const [typei, setType] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [inputtype, setInputType] = useState(true);
-
-  // console.log(user);
-
- 
+  const [signupdone, setSignupDone] = useState(false);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -23,12 +26,10 @@ const Signup = () => {
 
   const location = useLocation();
 
-  useEffect(() => {
-    const query = new URLSearchParams(location.search);
-    const code = query.get("code");
-
-  
-  }, [location.search]);
+  // useEffect(() => {
+  //   const query = new URLSearchParams(location.search);
+  //   const code = query.get("code");
+  // }, [location.search]);
 
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
@@ -39,21 +40,23 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const {  successsignup, gitdata ,successsignin} = useSelector(
+  const { successsignup, gitdata, successsignin } = useSelector(
     (state) => state.user
   );
 
-
-   console.log(successsignup);
+  console.log(successsignup);
 
   const GIT_CLIENT = "88591916336e1bc18179";
   // const gitHubRedirectURL = "http://localhost:3000/callback";
   // const path = "/";
-  function handleGoogleLoginSuccess(tokenResponse) {
+  const handleGoogleLoginSuccess = (tokenResponse) => {
     const accessToken = tokenResponse.access_token;
 
-    dispatch(signinGoogle(accessToken, navigate));
-  }
+    // Use setTimeout to delay the dispatch
+    setTimeout(() => {
+      dispatch(signinGoogle(accessToken, navigate));
+    }, 0);
+  };
 
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
 
@@ -65,52 +68,57 @@ const Signup = () => {
 
     if (code) {
       dispatch(gitsign(code));
-
     }
-  }, []);
+  }, [dispatch]);
 
   function githubLogin() {
-
     window.location.assign(
       `https://github.com/login/oauth/authorize?client_id=` + GIT_CLIENT
     );
   }
 
- useEffect(()=>{
-  localStorage.setItem("accesstoken", gitdata);
-     if(gitdata)
-     {
-      dispatch(gitdataUser())
-     }
- },[gitdata])
+  useEffect(() => {
+    localStorage.setItem("accesstoken", gitdata);
+    if (gitdata) {
+      dispatch(gitdataUser());
+    }
+  }, [gitdata]);
 
+  const handleTypehosting = (type) => {
+    if (type === "Self Hosting")
+      dispatch(typeidata({ hosting: "Self Hosting" }));
+    else {
+      dispatch(typeidata({ hosting: "XeroCodee  Hosting" }));
+    }
 
-  const handleTypehosting = () => {
-    navigate("/dash");
+    setTimeout(() => {
+      setSignupDone(true);
+    }, 0);
+
+    //
   };
 
+  useEffect(() => {
+    if (signupdone) navigate("/dash");
+  }, [signupdone]);
 
   const handleSubmitInput = async () => {
-
     setInputType(false);
-
     if (typei === "organisation") {
-      // dispatch({ organisation: inputValue });
+      dispatch(typeidata({ organisation: inputValue }));
     } else if (typei === "company") {
-      // dispatch({ company: inputValue });
+      dispatch(typeidata({ company: inputValue }));
     } else {
-      // dispatch({ developer: "developer" });
+      dispatch(typeidata({ developer: "developer" }));
     }
   };
 
   const handleType = (type_) => {
     setType(type_);
-
   };
   const handleLogin = () => {
     navigate("/");
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -202,7 +210,6 @@ const Signup = () => {
                   background: typei === "developer" ? "#1F64FF" : "",
                   color: typei === "developer" ? "white" : "",
                 }}
-
                 onClick={handleSubmitInput}
               >
                 Developer
@@ -229,11 +236,17 @@ const Signup = () => {
             </div>
           ) : (
             <div className="all_button_select">
-              <button className="hover_buton" onClick={handleTypehosting}>
+              <button
+                className="hover_buton"
+                onClick={()=>handleTypehosting("Self Hosting")}
+              >
                 Self Hosting
               </button>
 
-              <button className="hover_buton" onClick={handleTypehosting}>
+              <button
+                className="hover_buton"
+                onClick={()=>handleTypehosting("XeroCodee Hosting")}
+              >
                 XeroCodee Hosting
               </button>
             </div>

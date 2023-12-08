@@ -5,7 +5,7 @@
   gap: 38px;
   cursor: pointer;
 
-  padding: 16px;
+  padding: 12px;
   justify-content: space-between;
   display: flex;
   background: #fff;
@@ -15,7 +15,7 @@
     width: 100%;
     border-radius: 15px;
     border: 1px solid #f3f3f4;
-    /* margin-top: 13px; */
+
     gap: 34px;
     cursor: pointer;
 
@@ -42,7 +42,7 @@ h1 {
   flex-direction: column;
   gap: 5px;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 .card_outer > section > h1 {
   color: #242331;
@@ -76,7 +76,9 @@ font-size: 14px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;
+
   }
+
 .card_outer > section > span {
   display: flex;
   gap: 2px;
@@ -114,9 +116,15 @@ padding-top: 4px;
   border-radius: 15px;
   border: 1px solid #ffdfa2;
   background: #fff5e5;
+  width: 40px;
+  height: 40px;
+
 }
 
 .cardselect_outer > span {
+  width: 40px;
+  height: 40px;
+
     display: flex;
     justify-content: center;
     padding: 5px;

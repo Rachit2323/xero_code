@@ -11,7 +11,6 @@ const { response } = require("express");
 const GIT_CLIENT = "88591916336e1bc18179";
 const GIT_SEC = "4f90caf565877c1d22dd874caf1c6ebc8e32290a";
 
-
 exports.gitsign = async (req, res) => {
   const params =
     "?client_id=" +
@@ -30,21 +29,18 @@ exports.gitsign = async (req, res) => {
       return response.json();
     })
     .then((data) => {
-
       res.json(data);
     });
 };
 
 exports.getgit = async (req, res) => {
-  console.log("chec");
-  try {
 
+  try {
     const authorizationHeader = req.get("Authorization");
 
     if (!authorizationHeader) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-
 
     const response = await fetch("https://api.github.com/user/emails", {
       method: "GET",
@@ -58,7 +54,7 @@ exports.getgit = async (req, res) => {
     }
 
     const data = await response.json();
-    console.log(data);
+
 
     if (!data || !data.length) {
       throw new Error("No email found from GitHub API");
@@ -72,8 +68,8 @@ exports.getgit = async (req, res) => {
       const hashedPassword = await bcrypt.hash(email, 10);
       const newUser = new User({
         email,
-        firstName:email,
-        lastName:email,
+        firstName: email,
+        lastName: email,
         password: hashedPassword,
       });
 
@@ -184,10 +180,12 @@ exports.signup = async (req, res) => {
     });
 
     await newUser.save();
+    const token = jwt.sign({ id: newUser._id }, JWT_SECRET);
 
     res.status(200).json({
       success: true,
       data: firstName,
+      token: token,
       message: "Signup Done",
     });
   } catch (error) {
@@ -227,6 +225,80 @@ exports.signin = async (req, res) => {
       success: true,
       token: token,
       message: "User signed in successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "An error occurred while signing in the user",
+    });
+  }
+};
+
+exports.types = async (req, res) => {
+  try {
+    const { values } = req.body;
+
+    const key = Object.keys(values)[0];
+
+    if (key === "hosting")
+      await User.updateOne({ _id: req.userId }, { $set: { hosting: values } });
+    else
+      await User.updateOne({ _id: req.userId }, { $set: { userType: values } });
+
+    res.status(200).json({
+      success: true,
+      message: "User type updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "An error occurred while signing in the user",
+    });
+  }
+};
+
+exports.cards = async (req, res) => {
+  try {
+    const { values } = req.body;
+
+    const userId = req.userId;
+
+    const user = await User.findById(userId);
+
+    user.cloud = values[0].cloud;
+    user.sourceCode = values[1].source;
+    user.dataSource = values[2].data;
+
+    user.cloud_img = values[0].img;
+    user.dataSource_img = values[2].img;
+    user.sourceCode_img = values[1].img;
+    user.counted = 3;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Cards successfully stored in the database",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "An error occurred while signing in the user",
+    });
+  }
+};
+
+exports.userInfo = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const user = await User.findById(userId);
+
+    res.status(200).json({
+      success: true,
+      user: user,
+      message: "User details",
     });
   } catch (error) {
     console.log(error);

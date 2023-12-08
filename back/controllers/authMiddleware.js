@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET="djbjdbjdsb233";
+const JWT_SECRET = "djbjdbjdsb233";
 
 const isAuthenticated = (req, res, next) => {
     const authorizationHeader = req.header('Authorization');
@@ -9,10 +9,11 @@ const isAuthenticated = (req, res, next) => {
     }
 
     const token = authorizationHeader.slice(7); // Remove 'Bearer ' prefix
-  
+
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        req.userId = decoded?.userId;
+
+        req.userId = decoded?.id;
         next();
     } catch (err) {
         if (err.name === 'JsonWebTokenError') {
