@@ -39,7 +39,8 @@
 
 .left_signup {
   width: 50%;
-  padding-top: 32px;
+  padding-top: 23px;
+  padding-bottom: 8px;
   display: flex;
   justify-content: center;
   align-items: center;

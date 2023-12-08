@@ -51,7 +51,7 @@ const Navbar = () => {
       <img src={logo} />
       <section>
       {data.map((item) => (
-         <div>
+          <div key={item.id}>
          <span key={item.id} className={item.id === 1 ? 'selected_tag' : ''}>
            <img src={item.img} />
            <p style={item.id === 1 ? { color: '#0c5bc6' } : {}}>{item.name}</p>

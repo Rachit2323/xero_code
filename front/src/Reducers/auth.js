@@ -10,11 +10,12 @@ const initialState = {
   successsignin: false,
   successsignup: false,
   signupdata:"",
+  gitdata:""
 };
 
 export const signupUser = createAsyncThunk("signupuser", async (body) => {
   try {
-    console.log(body);
+
     const result = await fetch(`${API}users/signup`, {
       method: "POST",
       headers: {
@@ -48,9 +49,78 @@ export const signinUser = createAsyncThunk("signinuser", async (body) => {
 
     return data;
   } catch (error) {
-    return { error: error.message }; // Handle network or other errors
+    return { error: error.message }; 
   }
 });
+
+export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
+
+  try {
+    const response = await fetch(`${API}users/gsignin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token }),
+    });
+ 
+    const data = await response.json();
+ 
+    if (!response.ok) {
+      return { error: data.message };
+    }
+    // console.log(data,data.token);
+   localStorage.setItem("token", data.token);
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+ });
+
+ export const gitsign = createAsyncThunk("gitsign", async (code) => {
+
+  try {
+    const response = await fetch(`${API}users/getaccess?code=`+code, {
+      method: "GET",
+   
+    });
+ 
+    const data = await response.json();
+
+    if (!response.ok) {
+      return { error: data.message };
+    }
+
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+ });
+
+
+ export const gitdataUser= createAsyncThunk("gitdataUser", async () => {
+
+
+  try {
+    const response = await fetch(`${API}users/getUser`, {
+      method: "GET",
+      headers: {
+        "Authorization": "Bearer "+localStorage.getItem('accesstoken'),
+      },
+    });
+ 
+    const data = await response.json();
+    // console.log(data);
+    if (!response.ok) {
+      return { error: data.message };
+    }
+    localStorage.setItem("token", data.token);
+    //  console.log(data);
+    return data;
+  } catch (error) {
+    return { error: error.message };
+  }
+ });
 
 const authReducer = createSlice({
   name: "user",
@@ -66,7 +136,7 @@ const authReducer = createSlice({
         state.loading = false;
  
         if (action.payload.error) {
-          // state.errorsignup = action.payload.error;
+
           state.successsignup = action.payload.success;
         } else {
           state.errorsignup = action.payload.message;
@@ -97,6 +167,50 @@ const authReducer = createSlice({
       .addCase(signinUser.rejected, (state) => {
         state.loading = false;
         state.successsignin = false;
+      })
+      .addCase(signinGoogle.pending, (state) => {
+        state.loading = true;
+        state.successsignin = false;
+      })
+      .addCase(signinGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.successsignup = action.payload.success;
+        state.token = action.payload.token;
+      })
+      .addCase(signinGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.errorsignin = action.payload.error;
+        state.successsignin = action.payload.success;
+      })
+      .addCase(gitsign.pending, (state) => {
+        state.loading = true;
+        // state.successsignin = false;
+      })
+      .addCase(gitsign.fulfilled, (state, action) => {
+        state.loading = false;
+        // console.log(action.payload.access_token);
+        state.successsignup = action.payload.success;
+        state.gitdata = action.payload.access_token;
+      })
+      .addCase(gitsign.rejected, (state, action) => {
+        state.loading = false;
+        // state.errorsignin = action.payload.error;
+        // state.successsignin = action.payload.success;
+      })
+      .addCase(gitdataUser.pending, (state) => {
+        state.loading = true;
+        // state.successsignin = false;
+      })
+      .addCase(gitdataUser.fulfilled, (state, action) => {
+        state.loading = false;
+        // console.log(action.payload.access_token);
+        state.successsignup = action.payload.success;
+        state.gitdata = action.payload.access_token;
+      })
+      .addCase(gitdataUser.rejected, (state, action) => {
+        state.loading = false;
+        // state.errorsignin = action.payload.error;
+        state.successsignin = action.payload.success;
       });
   },
  });

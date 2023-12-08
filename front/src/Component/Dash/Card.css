@@ -2,10 +2,10 @@
   border-radius: 15px;
   border: 1px solid #f3f3f4;
   margin-top: 13px;
-  gap: 34px;
+  gap: 38px;
   cursor: pointer;
 
-  padding: 15px;
+  padding: 16px;
   justify-content: space-between;
   display: flex;
   background: #fff;
@@ -31,9 +31,10 @@ h1 {
 }
 
 .section_display{
+  width: 80vw;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 .card_outer > section {
   display: flex;
@@ -99,10 +100,17 @@ line-height: normal;
   background-color: #34a853;
 }
 
+#reload_img{
+  display: flex;
+justify-content: center;
+align-items: center;
+padding-top: 4px;
+}
+
 .card_outer > span {
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding: 12px;
   border-radius: 15px;
   border: 1px solid #ffdfa2;
   background: #fff5e5;

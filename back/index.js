@@ -1,16 +1,27 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
-
+const cors = require("cors");
 
 const app = express();
 const userRoutes = require("./routes/user.js");
 // const postRoutes = require("./routes/post.js");
-const cors = require("cors");
 
 app.use(express.json());
 
-app.use(cors());
+// app.use(cors({ credentials: true ,
+// }));
+
+const allowedOrigins = ['http://localhost:3000', 'http://example2.com'];
+app.use(cors({
+  credentials: true,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+}));
 
 
 app.use("/users", userRoutes);

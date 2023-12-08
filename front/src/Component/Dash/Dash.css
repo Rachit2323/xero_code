@@ -4,10 +4,16 @@
   background: #c2dafb;
   display: flex;
   position: fixed;
+  top: 0px;
+  left: 0px;
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  
 }
 .signle_dash {
   display: flex;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   padding-right: 10px;
   flex-direction: column;
 }
@@ -18,19 +24,20 @@
   flex-direction: column;
   border-radius: 35px;
   background: #fff;
-  width: 100%;
-  height: 100%;
+  width: 85vw;
+  height: 90vh;
+
 }
 
 .dash_name {
   box-sizing: border-box;
   width: 95%;
-  height: 20%;
+  height: 18%;
   justify-content: space-between;
   align-items: flex-start;
   display: flex;
   padding: 13px;
-  margin: 14px 15px 15px 30px;
+  margin: 12px 15px 12px 30px;
   border-radius: 25px;
   border: 1px solid #f6faff;
   background: linear-gradient(
@@ -55,7 +62,7 @@ p {
 .dash_name > span > h1 {
   color: #242331;
   font-family: "Nunito";
-  font-size: 75px;
+  font-size: 55px;
   font-style: normal;
   font-weight: 800;
 }
@@ -63,7 +70,7 @@ p {
 .dash_name > span > h6 {
   color: #000;
   font-family: "Nunito";
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -131,7 +138,7 @@ input:checked + .slider:before {
   color: #231f20;
 
   font-family: " Nunito";
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
 }
@@ -177,7 +184,7 @@ input:checked + .slider:before {
 }
 
 .section_card {
-  width: 100%;
+  width: 80vw;
   display: flex;
   flex-direction: column;
   padding-left: 30px;
@@ -206,6 +213,7 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  width: 70vw;
 }
 
 .card_all_section {

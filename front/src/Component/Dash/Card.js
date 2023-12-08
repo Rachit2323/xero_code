@@ -8,9 +8,9 @@ const Card = () => {
       <section>
         <h1>AWS</h1>
         <span>
-          <tag id="red"></tag>
-          <tag id="green"></tag>
-          <img src={reload} />
+          <p id="red"></p>
+          <p id="green"></p>
+         <p id="reload_img"> <img src={reload} /></p>
         </span>
       </section>
       <span>

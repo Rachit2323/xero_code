@@ -3,27 +3,62 @@ import "./Signin.css";
 import { useNavigate } from "react-router-dom";
 import xcode from "../../Images/logo 4.png";
 import { useDispatch, useSelector } from "react-redux";
-import { signinUser } from "../../Reducers/auth.js";
+import { signinUser, signinGoogle  ,gitsign ,gitdataUser} from "../../Reducers/auth.js";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const GIT_CLIENT = "88591916336e1bc18179";
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const accessToken = tokenResponse.access_token;
+
+    dispatch(signinGoogle(accessToken, navigate));
+  }
+  const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
+  function githubLogin() {
+
+    window.location.assign(
+      `https://github.com/login/oauth/authorize?client_id=` + GIT_CLIENT
+    );
+  }
+  const { errorsignin, successsignin,gitdata, signupdata ,successsignup} = useSelector(
+    (state) => state.user
+  );
+
+
+  useEffect(() => {
+    const query_ = window.location.search;
+
+    const url = new URLSearchParams(query_);
+    const code = url.get("code");
+
+    if (code) {
+      dispatch(gitsign(code));
+
+    }
+  }, []);
+
+ useEffect(()=>{
+  localStorage.setItem("accesstoken", gitdata);
+     if(gitdata)
+     {
+      dispatch(gitdataUser())
+     }
+ },[gitdata])
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const { errorsignin, successsignin, signupdata } = useSelector(
-    (state) => state.user
-  );
 
   const handleSignup = () => {
     navigate("/signup");
   };
-
   useEffect(() => {
-    if (successsignin) navigate("/dash");
-  }, [successsignin]);
+    if (successsignup) navigate("/dash");
+  }, [successsignup]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,8 +96,8 @@ const Signin = () => {
           </div>
           <p>OR</p>
           <div className="buttons_signin">
-            <button>Login With Google</button>
-            <button>Login With Github</button>
+            <button onClick={() => login()}>Login With Google</button>
+            <button onClick={githubLogin}>Login With Github</button>
           </div>
           <h3>
             Don’t have an Account ?{" "}
