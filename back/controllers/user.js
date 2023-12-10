@@ -67,11 +67,12 @@ exports.getgit = async (req, res) => {
 
     if (!existingUser) {
       const hashedPassword = await bcrypt.hash(email, 10);
-       const username_new = email.split('@')[0];
+     const username_new = email.split('@')[0].slice(0, 6);
+
       const newUser = new User({
         email,
-         firstName: username_new,
-        lastName: username_new,
+        firstName: username_new,
+  lastName: username_new,
         password: hashedPassword,
       });
 
