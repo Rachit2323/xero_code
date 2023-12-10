@@ -20,7 +20,7 @@ const Signin = () => {
     const accessToken = tokenResponse.access_token;
 
     dispatch(signinGoogle(accessToken, navigate));
-    console.log("done");
+ 
         navigate("/signup");
   }
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
@@ -28,6 +28,8 @@ const Signin = () => {
     window.location.assign(
       `https://github.com/login/oauth/authorize?client_id=` + GIT_CLIENT
     );
+       console.log("done");
+    navigate("/signup");
   }
   const { errorsignin, successsignin, gitdata, signupdata, successsignup } =
     useSelector((state) => state.user);
