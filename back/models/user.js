@@ -47,6 +47,7 @@ const UserSchema = new Schema({
  },
  counted:{
   type:Number,
+   default: 0 
 
  },
  infor:{
