@@ -6,7 +6,7 @@ const app = express();
 const userRoutes = require("./routes/user.js");
 // const postRoutes = require("./routes/post.js");
 const URI =
-  "mongodb+srv://Rachit23:UhP8Iiyp4xxptvmM@cluster0.fgnb20h.mongodb.net/startup";
+  "mongodb+srv://Rachit23:UhP8Iiyp4xxptvmM@cluster0.fgnb20h.mongodb.net/zero";
 // const URI="mongodb://localhost:27017/zerocode";
 
 app.use(express.json());
