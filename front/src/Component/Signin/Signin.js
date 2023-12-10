@@ -30,6 +30,7 @@ const Signin = () => {
     );
        console.log("done");
     navigate("/signup");
+           console.log("done");
   }
   const { errorsignin, successsignin, gitdata, signupdata, successsignup } =
     useSelector((state) => state.user);
@@ -64,6 +65,8 @@ const Signin = () => {
 
      if(successsignin)
       navigate("/dash");
+    else 
+           navigate("/signup");
 
   
   }, [successsignin]);
