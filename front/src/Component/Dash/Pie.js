@@ -6,7 +6,8 @@ ChartJS.register(Tooltip, Legend);
 
 const PieChart = ({ score }) => {
   let remainingScore = 100 - score;
-  
+  if(score===0)
+    remainingScore=0;
 
   const data = {
     labels: [" ", " "],
