@@ -182,3 +182,25 @@
     cursor: pointer;
   }
   
+
+  @media (max-width: 746px) {
+    .left_signin > span{
+      font-size: 28px;
+    }
+    .left_signin > section > span{
+      font-size: 11px;
+    }
+    .all_input input{
+      padding: 8px;
+    }
+    .all_input > button {
+      padding: 8px;
+    }
+    .buttons_signin > button {
+      padding: 8px;
+      font-size: 11px;
+    }
+    .left_signin > h3{
+      font-size: 12px;
+    }
+  }

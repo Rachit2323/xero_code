@@ -289,3 +289,42 @@ input:checked + .slider:before {
   font-weight: 700;
   line-height: normal;
 }
+
+
+@media (max-width: 690px) {
+  .dash_name > span > h1{
+    font-size: 35px;
+  }
+  .dash_name > span > h6{
+    font-size: 11px;
+  }
+  .switch-text{
+    font-size: 12px;
+  }
+  .switch {
+    width: 40px;
+    height: 18px;
+
+  }
+  .slider:before{
+    height: 12px;
+    width: 13px;
+  }
+  input:checked + .slider:before {
+    transform: translateX(18px);
+}
+
+.dash_name {
+  height: 13%;
+}
+.section_card > section > span > h1 
+{
+  font-size: 16px;
+}
+.section_card > section > span > p{
+  font-size: 12px;
+}
+.section_right > span > h1{
+  font-size: 18px;
+}
+}

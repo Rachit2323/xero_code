@@ -9,10 +9,12 @@ import {
   gitsign,
   gitdataUser,
   typeidata,
+  userdetails,
+
 } from "../../Reducers/auth.js";
-import { useAuth0 } from "@auth0/auth0-react";
+
 import { useGoogleLogin } from "@react-oauth/google";
-import { useParams, useLocation } from "react-router-dom";
+
 const Signup = () => {
   const [typei, setType] = useState("");
   const [inputValue, setInputValue] = useState("");
@@ -24,13 +26,6 @@ const Signup = () => {
   };
   const navigate = useNavigate();
 
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   const query = new URLSearchParams(location.search);
-  //   const code = query.get("code");
-  // }, [location.search]);
-
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -40,19 +35,21 @@ const Signup = () => {
     confirmPassword: "",
   });
 
-  const { successsignup, gitdata, successsignin } = useSelector(
+  const { successsignup, gitdata, userdata} = useSelector(
     (state) => state.user
   );
 
-  console.log(successsignup);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token !== null) 
+    dispatch(userdetails());
+  }, [successsignup]);
 
   const GIT_CLIENT = "88591916336e1bc18179";
-  // const gitHubRedirectURL = "http://localhost:3000/callback";
-  // const path = "/";
+
   const handleGoogleLoginSuccess = (tokenResponse) => {
     const accessToken = tokenResponse.access_token;
 
-    // Use setTimeout to delay the dispatch
     setTimeout(() => {
       dispatch(signinGoogle(accessToken, navigate));
     }, 0);
@@ -90,17 +87,13 @@ const Signup = () => {
     else {
       dispatch(typeidata({ hosting: "XeroCodee  Hosting" }));
     }
-
     setTimeout(() => {
       setSignupDone(true);
     }, 0);
-
-    //
+      navigate("/dash");
   };
 
-  useEffect(() => {
-    if (signupdone) navigate("/dash");
-  }, [signupdone]);
+
 
   const handleSubmitInput = async () => {
     setInputType(false);
@@ -117,13 +110,24 @@ const Signup = () => {
     setType(type_);
   };
   const handleLogin = () => {
+
     navigate("/");
   };
+
+  useEffect(() => {
+    if (userdata?.infor === 1) {
+   
+        navigate("/dash");
+
+    }
+ 
+  }, [successsignup, userdata?.infor]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signupUser(formData));
   };
+
   return (
     <div className="outer_signup">
       {!successsignup && (
@@ -177,8 +181,8 @@ const Signup = () => {
             </div>
             <p>OR</p>
             <div className="buttons_signup">
-              <button onClick={() => login()}>Sign Up With Google</button>
-              <button onClick={githubLogin}>Sign Up With Github</button>
+              <button onClick={()=>login()}>Sign Up With Google</button>
+              <button onClick={()=>githubLogin()}>Sign Up With Github</button>
             </div>
             <h3>
               Already have an Account ?{" "}
@@ -190,7 +194,7 @@ const Signup = () => {
         </div>
       )}
 
-      {successsignup && (
+      {successsignup && userdata?.infor === 0 && (
         <div className="signup_inside1">
           <img src={xcode} />
           <span>Welcome !</span>
@@ -238,20 +242,20 @@ const Signup = () => {
             <div className="all_button_select">
               <button
                 className="hover_buton"
-                onClick={()=>handleTypehosting("Self Hosting")}
+                onClick={() => handleTypehosting("Self Hosting")}
               >
                 Self Hosting
               </button>
 
               <button
                 className="hover_buton"
-                onClick={()=>handleTypehosting("XeroCodee Hosting")}
+                onClick={() => handleTypehosting("XeroCodee Hosting")}
               >
                 XeroCodee Hosting
               </button>
             </div>
           )}
-          {inputtype && (
+          {(inputtype &&(typei==='company'||typei==='organisation')) && (
             <div className="input_button_types">
               <input
                 placeholder={
@@ -263,8 +267,6 @@ const Signup = () => {
                 id="inputField"
                 value={inputValue}
                 onChange={handleInputChange}
-
-                // value={formData.firstName}
               />
               <button onClick={handleSubmitInput}>SUBMIT</button>
             </div>

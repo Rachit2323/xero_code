@@ -9,10 +9,17 @@ import db from "./svg/database.svg";
 import envi from "./svg/envi.svg";
 import work from "./svg/workflow.svg";
 import monitor from "./svg/monitor.svg";
+
 import security from "./svg/security.svg";
 import hook from "./svg/hook.svg";
 import log from "./svg/log.svg";
+import { useNavigate } from "react-router-dom";
+import {
+ logout
+} from "../../Reducers/auth.js";
+import { useDispatch, useSelector } from "react-redux";
 const Navbar = () => {
+  const navigate = useNavigate();
   const data = [
     {
       id: 1,
@@ -46,6 +53,10 @@ const Navbar = () => {
     { id: 10, img: hook, name: "Web Hooks " },
     { id: 11, img: log, name: "Log Error " },
   ];
+
+  const dispatch=useDispatch();
+
+
   return (
     <div className="navbar_outer">
       <img src={logo} />
@@ -59,6 +70,7 @@ const Navbar = () => {
          <p id={item.id === 1 ? 'react_tag' : ''}></p>
          </div>
        ))}
+       {/* <button className="logout" onClick={()=>handleLogout()}>Logout </button> */}
       </section>
     </div>
   );

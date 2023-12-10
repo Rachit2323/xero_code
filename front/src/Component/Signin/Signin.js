@@ -3,7 +3,13 @@ import "./Signin.css";
 import { useNavigate } from "react-router-dom";
 import xcode from "../../Images/logo 4.png";
 import { useDispatch, useSelector } from "react-redux";
-import { signinUser, signinGoogle  ,gitsign ,gitdataUser} from "../../Reducers/auth.js";
+import {
+  signinUser,
+  signinGoogle,
+  gitsign,
+  gitdataUser,
+  logout,
+} from "../../Reducers/auth.js";
 import { useGoogleLogin } from "@react-oauth/google";
 
 const Signin = () => {
@@ -17,15 +23,12 @@ const Signin = () => {
   }
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
   function githubLogin() {
-
     window.location.assign(
       `https://github.com/login/oauth/authorize?client_id=` + GIT_CLIENT
     );
   }
-  const { errorsignin, successsignin,gitdata, signupdata ,successsignup} = useSelector(
-    (state) => state.user
-  );
-
+  const { errorsignin, successsignin, gitdata, signupdata, successsignup } =
+    useSelector((state) => state.user);
 
   useEffect(() => {
     const query_ = window.location.search;
@@ -35,17 +38,15 @@ const Signin = () => {
 
     if (code) {
       dispatch(gitsign(code));
-
     }
   }, []);
 
- useEffect(()=>{
-  localStorage.setItem("accesstoken", gitdata);
-     if(gitdata)
-     {
-      dispatch(gitdataUser())
-     }
- },[gitdata])
+  useEffect(() => {
+    localStorage.setItem("accesstoken", gitdata);
+    if (gitdata) {
+      dispatch(gitdataUser());
+    }
+  }, [gitdata]);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -56,9 +57,12 @@ const Signin = () => {
     navigate("/signup");
   };
   useEffect(() => {
-    if (successsignup) navigate("/dash");
-  }, [successsignup]);
 
+     if(successsignin)
+      navigate("/dash");
+
+  
+  }, [successsignin]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

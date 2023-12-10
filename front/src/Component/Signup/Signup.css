@@ -260,6 +260,8 @@ h3 {
   background: #fff;
   padding: 17px 80px;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input_button_types {
@@ -292,4 +294,42 @@ h3 {
 
 .hover_buton:hover{
   background: rgb(195, 195, 195);
+}
+
+@media (max-width: 746px) {
+  .left_signup > span{
+    font-size: 28px;
+  }
+  .left_signup > section > span {
+    font-size: 12px;
+  }
+  .buttons_signup > button{
+    font-size: 11px;
+    padding: 8px;
+  }
+  .left_signup > h3{
+    font-size: 12px;
+  }
+ 
+}
+
+@media (max-width: 1036px) {
+  .signup_inside1 > section > span{
+    font-size: 10px;
+  }
+  .all_button_select {
+    gap: 12px;
+    flex-direction: column;
+    width: 55%;
+  }
+  .all_button_select > button{
+    padding: 10px 70px;
+  }
+  .input_button_types{
+    padding-top: 0px;
+    flex-direction: column;
+  }
+  .signup_inside1{
+    height: 65%;
+  }
 }

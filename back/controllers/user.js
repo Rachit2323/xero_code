@@ -245,6 +245,10 @@ exports.types = async (req, res) => {
       await User.updateOne({ _id: req.userId }, { $set: { hosting: values } });
     else
       await User.updateOne({ _id: req.userId }, { $set: { userType: values } });
+    
+       
+   await User.findOneAndUpdate({ _id: req.userId }, { $set: { infor: 1 } });
+
 
     res.status(200).json({
       success: true,

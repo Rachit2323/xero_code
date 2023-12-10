@@ -24,6 +24,8 @@ const UserSchema = new Schema({
  },
  userType:{
     type: Object,
+    default:{},
+    
  },
  cloud:{
   type:String
@@ -44,7 +46,14 @@ const UserSchema = new Schema({
   type:String,
  },
  counted:{
-  type:Number
+  type:Number,
+
+ },
+ infor:{
+  type:Number,
+  default:0,
+  required: true
+
  }
 });
 

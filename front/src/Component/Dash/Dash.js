@@ -5,7 +5,7 @@ import Topbar from "./Topbar.js";
 import Card from "./Card.js";
 import Pie from "./Pie.js";
 import CardSelect from "./Cardselect.js";
-import { useNavigate } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 import { carddata, userdetails } from "../../Reducers/auth.js";
 
@@ -21,27 +21,23 @@ const Dash = () => {
   ]);
 
   const { userdata } = useSelector((state) => state.user);
-  console.log(selectedSystem);
 
   const {
-    cloud,
-    cloud_img,
-    sourceCode,
-    sourceCode_img,
-    dataSource,
-    dataSource_img,
-    counted,
-
-  } = userdata;
+    cloud = "",
+    cloud_img = "",
+    sourceCode = "",
+    sourceCode_img = "",
+    dataSource = "",
+    dataSource_img = "",
+    counted = "",
+  } = userdata || {};
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (userdata) {
-      // setCount(3);
-    
-        setCount(counted);
-      
+      setCount(counted);
+
       setSelectedSystem([
         {
           cloud: cloud,
@@ -59,15 +55,14 @@ const Dash = () => {
     }
   }, [userdata]);
 
-  console.log(selectedSystem);
   useEffect(() => {
-    dispatch(userdetails());
+    const token = localStorage.getItem("token");
+    if (token !== null) dispatch(userdetails());
   }, []);
 
   useEffect(() => {
-    // console.log(selectedSystem,count);
-    if (count >= 3) {
-      
+    const token = localStorage.getItem("token");
+    if (count >= 3 && token) {
       dispatch(carddata(selectedSystem));
     }
   }, [count]);
@@ -110,7 +105,7 @@ const Dash = () => {
           <div className="dash_main">
             <div className="dash_name">
               <span>
-                <h1>Hi {userdata.firstName} !</h1>
+                <h1>Hi {userdata?.firstName} !</h1>
                 <h6>Welcome to XeroCodee Ecosystem 😎</h6>
               </span>
               <div className="switch-container">
@@ -132,7 +127,7 @@ const Dash = () => {
                   <Circlehole />
                   <span></span>
                 </section>
-                {/* Ecosystem */}
+
                 <div className="section_display">
                   {ecosystem.map((system, index) => (
                     <div key={index} className="section_card">
@@ -160,7 +155,6 @@ const Dash = () => {
                 </div>
               </div>
 
-              {/* Progress */}
               <div className="section_right">
                 <span>
                   <h1>Your Progress </h1>

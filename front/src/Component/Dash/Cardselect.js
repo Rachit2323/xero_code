@@ -2,7 +2,7 @@ import React from "react";
 import "./Card.css";
 
 const CardSelect = ({ name, status, img }) => {
- console.log(name, status, img );
+
   return (
     <div className="cardselect_outer ">
       <section>

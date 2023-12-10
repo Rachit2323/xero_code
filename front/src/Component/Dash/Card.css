@@ -132,3 +132,19 @@ padding-top: 4px;
     border: 1px solid #ffdfa2;
     background: white;
 }
+
+@media (max-width: 690px) {
+
+  .card_outer > section > h1 {
+    font-size: 18px;
+  }
+  .cardselect_outer > section > h1{
+    font-size: 15px;
+  }
+  .cardselect_outer >section >span {
+    font-size: 12px;
+  }
+  .section_display{
+    gap: 40px;
+  }
+}

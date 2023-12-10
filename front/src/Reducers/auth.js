@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// const API="https://ins01.onrender.com/";
-// frontend  charming-belekoy-1d7e17
+import { useNavigate } from "react-router-dom";
 const API = "http://localhost:4000/";
-const initialState = {
+let initialState = {
   token: "",
   loading: false,
   errorsignup: "",
@@ -11,7 +10,7 @@ const initialState = {
   successsignup: false,
   signupdata:"",
   gitdata:"",
-  userdata:{}
+  userdata:{},
 };
 
 export const signupUser = createAsyncThunk("signupuser", async (body) => {
@@ -73,7 +72,7 @@ export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
     if (!response.ok) {
       return { error: data.message };
     }
-    // console.log(data,data.token);
+    // console.log(data,data.token);s
    localStorage.setItem("token", data.token);
     return data;
   } catch (error) {
@@ -105,6 +104,7 @@ export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
 
   try {
     const token = localStorage.getItem("token");
+
     const response = await fetch(`${API}users/userdetail`, {
       method: "GET",
       headers:{
@@ -114,7 +114,8 @@ export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
     });
 
     const data = await response.json();
-
+    
+    
 
     if (!response.ok) {
       return { error: data.message };
@@ -201,6 +202,8 @@ export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
  });
  
 
+
+
 const authReducer = createSlice({
   name: "user",
   initialState,
@@ -221,6 +224,7 @@ const authReducer = createSlice({
           state.errorsignup = action.payload.message;
           state.successsignup = action.payload.success;
           state.signupdata=action.payload.data;
+
         }
       })
       .addCase(signupUser.rejected, (state) => {
@@ -239,6 +243,7 @@ const authReducer = createSlice({
           state.errorsignin = action.payload.error;
           state.successsignin = action.payload.success;
         } else {
+
           state.errorsignin = action.payload.message;
           state.successsignin = action.payload.success;
         }

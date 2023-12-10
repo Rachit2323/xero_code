@@ -105,3 +105,13 @@ p {
   font-style: normal;
   font-weight: 700;
 }
+
+
+@media (max-width: 746px) {
+ .right_bar{
+  display: none;
+ }
+ .search_bar{
+  width: 38%;
+ }
+}
