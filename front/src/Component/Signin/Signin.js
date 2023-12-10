@@ -65,9 +65,7 @@ const Signin = () => {
 
      if(successsignin)
       navigate("/dash");
-    else 
-           navigate("/signup");
-
+   
   
   }, [successsignin]);
 
