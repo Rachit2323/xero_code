@@ -60,6 +60,7 @@ export const signinUser = createAsyncThunk("signinuser", async (body) => {
 export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
 
   try {
+   console.log('token',token)
     const response = await fetch(`${API}users/gsignin`, {
       method: "POST",
       headers: {
@@ -75,6 +76,7 @@ export const signinGoogle = createAsyncThunk("signinGoogle", async (token) => {
     }
     // console.log(data,data.token);s
    localStorage.setItem("token", data.token);
+      console.log("check");
     return data;
   } catch (error) {
     return { error: error.message };
