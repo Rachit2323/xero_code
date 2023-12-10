@@ -41,10 +41,11 @@ const Signin = () => {
 
     if (code) {
       dispatch(gitsign(code));
-    }
-          console.log("done");
+      console.log("done");
     navigate("/signup");
            console.log("done");
+    }
+          
   }, []);
 
   useEffect(() => {
