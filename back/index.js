@@ -14,7 +14,7 @@ app.use(express.json());
 // app.use(cors({ credentials: true ,
 // }));
 
-const allowedOrigins = ["http://localhost:3000","https://xcode-1112.netlify.app","https://xero-code-zuhz-26medbotv-rachit2323.vercel.app"];
+const allowedOrigins = ["http://localhost:3000","https://xcode-1112.netlify.app","https://xero-code-jet.vercel.app/"];
 app.use(
   cors({
     credentials: true,
