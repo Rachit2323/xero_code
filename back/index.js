@@ -14,7 +14,7 @@ app.use(express.json());
 // app.use(cors({ credentials: true ,
 // }));
 
-const allowedOrigins = ["http://localhost:3000","https://guileless-zuccutto-785222.netlify.app/"];
+const allowedOrigins = ["http://localhost:3000","https://xcode-1112.netlify.app"];
 app.use(
   cors({
     credentials: true,
