@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useNavigate } from "react-router-dom";
-const API = "http://localhost:4000/";
+// const API = "http://localhost:4000/";
+const API="https://xero-code-rq3z-73z19uvd8-rachit2323.vercel.app/";
 let initialState = {
   token: "",
   loading: false,
