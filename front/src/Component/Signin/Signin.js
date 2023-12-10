@@ -28,9 +28,7 @@ const Signin = () => {
     window.location.assign(
       `https://github.com/login/oauth/authorize?client_id=` + GIT_CLIENT
     );
-       console.log("done");
-    navigate("/signup");
-           console.log("done");
+ 
   }
   const { errorsignin, successsignin, gitdata, signupdata, successsignup } =
     useSelector((state) => state.user);
@@ -44,6 +42,9 @@ const Signin = () => {
     if (code) {
       dispatch(gitsign(code));
     }
+          console.log("done");
+    navigate("/signup");
+           console.log("done");
   }, []);
 
   useEffect(() => {
