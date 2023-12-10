@@ -29,14 +29,18 @@ const Dash = () => {
     sourceCode_img = "",
     dataSource = "",
     dataSource_img = "",
-    counted = "",
+    counted ,
   } = userdata || {};
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (userdata) {
-      setCount(counted);
+        const countedAsNumber = parseInt(counted);
+
+      // console.log(countedAsNumber,typeof(countedAsNumber));
+setCount(countedAsNumber);
+
 
       setSelectedSystem([
         {
