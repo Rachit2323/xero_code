@@ -20,6 +20,7 @@ const Signin = () => {
     const accessToken = tokenResponse.access_token;
 
     dispatch(signinGoogle(accessToken, navigate));
+        navigate("/signup");
   }
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
   function githubLogin() {
